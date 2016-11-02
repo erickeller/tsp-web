@@ -1,0 +1,17 @@
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND noninteractive 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    dh-make \
+    fakeroot \
+    debootstrap \
+    sbuild \
+    schroot \
+    build-essential
+RUN apt-get clean
+RUN mkdir -p /build/tsp-web
+WORKDIR /build/tsp-web
+VOLUME /build/tsp-web
+VOLUME /build
+

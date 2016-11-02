@@ -1,0 +1,20 @@
+FROM ubuntu:xenial
+
+ENV DEBIAN_FRONTEND noninteractive 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    dh-make \
+    fakeroot \
+    debootstrap \
+    sbuild \
+    schroot \
+    build-essential
+RUN apt-get clean
+RUN mkdir -p /build /srv/chroot/
+RUN sbuild-adduser root
+RUN newgrp sbuild
+# intended to be run as privileged container and committed.
+#RUN sbuild-createchroot --include=eatmydata,ccache,gnupg xenial /srv/chroot/xenial-amd64 http://ch.archive.ubuntu.com/ubuntu/
+WORKDIR /build
+VOLUME /build
+
